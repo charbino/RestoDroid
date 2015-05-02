@@ -52,29 +52,16 @@ public class RestoProvider extends ContentProvider {
     private static final String sLocationSettingSelection =
             RestoContract.LocationEntry.TABLE_NAME+
                     "." + RestoContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? ";
-    private static final String sLocationSettingWithStartDateSelection =
-            RestoContract.LocationEntry.TABLE_NAME+
-                    "." + RestoContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? AND " +
-                    RestoContract.RestaurantEntry.COLUMN_DATETEXT + " >= ? ";
 
-    private static final String sLocationSettingAndDaySelection =
-            RestoContract.LocationEntry.TABLE_NAME +
-                    "." + RestoContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? AND " +
-                    RestoContract.RestaurantEntry.COLUMN_DATETEXT + " = ? ";
-
-    private Cursor getWeatherByLocationSetting(Uri uri, String[] projection, String sortOrder) {
+    private Cursor getRestaurantByLocationSetting(Uri uri, String[] projection, String sortOrder) {
         String locationSetting = RestoContract.RestaurantEntry.getLocationSettingFromUri(uri);
 
         String[] selectionArgs;
         String selection;
 
-        if (startDate == null) {
             selection = sLocationSettingSelection;
             selectionArgs = new String[]{locationSetting};
-        } else {
-            selectionArgs = new String[]{locationSetting, startDate};
-            selection = sLocationSettingWithStartDateSelection;
-        }
+
 
         return sWeatherByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
@@ -86,19 +73,20 @@ public class RestoProvider extends ContentProvider {
         );
     }
 
-    private Cursor getWeatherByLocationSettingAndDate(
+    private Cursor getResaurantByLocationSettingAndDate(
             Uri uri, String[] projection, String sortOrder) {
         String locationSetting = RestoContract.RestaurantEntry.getLocationSettingFromUri(uri);
         String date = RestoContract.RestaurantEntry.getDateFromUri(uri);
 
-        return sWeatherByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
-                projection,
-                sLocationSettingAndDaySelection,
-                new String[]{locationSetting, date},
-                null,
-                null,
-                sortOrder
-        );
+//        return sWeatherByLocationSettingQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+//                projection,
+//                sLocationSettingAndDaySelection,
+//                new String[]{locationSetting, date},
+//                null,
+//                null,
+//                sortOrder
+//        );
+        return null; // A CHANGER
     }
 
     private static UriMatcher buildUriMatcher() {
@@ -135,15 +123,9 @@ public class RestoProvider extends ContentProvider {
         // and query the database accordingly.
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
-            // "weather/*/*"
-            case WEATHER_WITH_LOCATION_AND_DATE:
-            {
-                retCursor = getWeatherByLocationSettingAndDate(uri, projection, sortOrder);
-                break;
-            }
             // "weather/*"
             case WEATHER_WITH_LOCATION: {
-                retCursor = getWeatherByLocationSetting(uri, projection, sortOrder);
+                retCursor = getRestaurantByLocationSetting(uri, projection, sortOrder);
                 break;
             }
             // "weather"
@@ -225,7 +207,7 @@ public class RestoProvider extends ContentProvider {
             case WEATHER: {
                 long _id = db.insert(RestoContract.RestaurantEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
-                    returnUri = RestoContract.RestaurantEntry.buildWeatherUri(_id);
+                    returnUri = RestoContract.RestaurantEntry.buildRestaurantUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;

@@ -136,15 +136,6 @@ public class ForecastFragment extends Fragment {
         private String[] getWeatherDataFromJson(String forecastJsonStr, int numResto)
                 throws JSONException {
 
-            // These are the names of the JSON objects that need to be extracted.
-//            final String OWM_LIST = "list";
-//            final String OWM_WEATHER = "weather";
-//            final String OWM_TEMPERATURE = "temp";
-//            final String OWM_MAX = "max";
-//            final String OWM_MIN = "min";
-//            final String OWM_DATETIME = "dt";
-//            final String OWM_DESCRIPTION = "main";
-
             final String OWM_LIST = "objetsTouristiques";
             final String OWM_NOM_RESTO = "nom";
             final String OWM_NOMFR_RESTO = "libelleFr";
@@ -175,7 +166,6 @@ public class ForecastFragment extends Fragment {
 
 
                 //on récupère l'adresse
-
                 JSONObject adresseObject = restoForecast.getJSONObject(OWM_LOCALISATION).getJSONObject(OWM_ADRESSE);
                 adresse = adresseObject.getString(OWM_ADRESSE_RESTO);
                 JSONObject communeObject = adresseObject.getJSONObject(OWM_COMMUNE);
@@ -284,8 +274,8 @@ public class ForecastFragment extends Fragment {
             protected void onPostExecute (String[]result){
                 if (result != null) {
                     mForecastAdapter.clear();
-                    for (String dayForecastStr : result) {
-                        mForecastAdapter.add(dayForecastStr);
+                    for (String restoForecastStr : result) {
+                        mForecastAdapter.add(restoForecastStr);
                     }
                     // New data is back from the server.  Hooray!
                 }

@@ -98,6 +98,7 @@ public class RestoContract {
         // Human readable location string, provided by the API.  Because for styling,
         // "Mountain View" is more recognizable than 94043.
         public static final String COLUMN_CITY_NAME = "city_name";
+        public static final String COLUMN_ADRESSE = "adresse";
 
         // In order to uniquely pinpoint the location on the map when we launch the
         // map intent, we store the latitude and longitude as returned by openweathermap.
@@ -132,7 +133,7 @@ public class RestoContract {
         public static final String COLUMN_SHORT_DESC = "short_desc";
 
 
-        public static Uri buildWeatherUri(long id) {
+        public static Uri buildRestaurantUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
