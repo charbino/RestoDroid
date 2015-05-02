@@ -10,4 +10,17 @@
         <item>@string/pref_units_metric</item>
         <item>@string/pref_units_imperial</item>
     </string-array>
+
+    <string-array name="pref_radius_options">
+        <item>@string/pref_radius_label_un_borne</item>
+        <item>@string/pref_radius_label_trois_borne</item>
+        <item>@string/pref_radius_label_dix_borne</item>
+    </string-array>
+
+    <string-array name="pref_radius_values">
+        <item>@string/pref_radius_un_borne</item>
+        <item>@string/pref_radius_trois_borne</item>
+        <item>@string/pref_radius_dix_borne</item>
+    </string-array>
+
 </resources>

@@ -15,8 +15,10 @@
  */
 package com.example.marcelo.restodroid;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.*;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,9 +46,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
@@ -59,6 +61,7 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
@@ -196,8 +199,24 @@ public class ForecastFragment extends Fragment {
                 String format = "json";
                 String units = "metric";
                 int nbResto = 20;
+                int portee =3000;
+
+                //après il faudra retrouver notre longitude et lattitude
+                double longitude =5.724;
+                double lattitude =45.188;
+
+//                //on récupère la longitute et lattitude actuelle
+//                //ATTENTION : Ne fonctionne pas
+//                LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+//                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                longitude=location.getLongitude();
+//                lattitude=location.getLatitude();
 
                 try {
+                    //on recupère la porté que l'on veux
+                    //ATTENTION NE FONCTIONNE PAS
+                    //portee =R.string.pref_radius_key;
+
                     final String FORECAST_BASE_URL =
                             "http://api.sitra-tourisme.com/api/v002/recherche/list-objets-touristiques?";
 
@@ -206,7 +225,7 @@ public class ForecastFragment extends Fragment {
                     final String API_KEY = "apiKey";
                     final String CRITERES_QUERY = "criteresQuery";
                     final String NB_RESTO = "count";
-                    final String rq = "{\"projetId\":\"1143\",\"apiKey\":\"m4VH2Zee\",\"criteresQuery\":\"type:RESTAURATION\"}";
+                    final String rq = "{\"projetId\":\"1143\",\"apiKey\":\"m4VH2Zee\",\"criteresQuery\":\"type:RESTAURATION\",\"center\":{\"type\":\"Point\",\"coordinates\":["+longitude+","+lattitude+"]},\"radius\":3000,\"order\":\"DISTANCE\"}";
                     final String QUERY_PARAM = "q";
 
 
@@ -217,6 +236,7 @@ public class ForecastFragment extends Fragment {
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
+
 
 
                     // Read the input stream into a String

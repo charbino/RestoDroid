@@ -11,10 +11,17 @@
         android:singleLine="true" />
 
     <ListPreference
-        android:title="@string/pref_units_label"
-        android:key="@string/pref_units_key"
-        android:defaultValue="@string/pref_units_metric"
-        android:entryValues="@array/pref_units_values"
-        android:entries="@array/pref_units_options" />
+    android:title="@string/pref_units_label"
+    android:key="@string/pref_units_key"
+    android:defaultValue="@string/pref_units_metric"
+    android:entryValues="@array/pref_units_values"
+    android:entries="@array/pref_units_options" />
+
+    <ListPreference
+        android:title="@string/pref_radius"
+        android:key="@string/pref_radius_key"
+        android:defaultValue="@string/pref_radius_trois_borne"
+        android:entryValues="@array/pref_radius_values"
+        android:entries="@array/pref_radius_options" />
 
 </PreferenceScreen>

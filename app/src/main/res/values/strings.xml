@@ -33,6 +33,26 @@
     <!-- Label for the temperature units preference [CHAR LIMIT=30] -->
     <string name="pref_units_label">Temperature Units</string>
 
+    <string name="pref_radius">Portée de la recherche</string>
+
+    <!-- portée de 1 km-->
+    <string name="pref_radius_un_borne">1000</string>
+
+    <!-- portée de 3 km-->
+    <string name="pref_radius_trois_borne">3000</string>
+
+    <!-- portée de 10 km-->
+    <string name="pref_radius_dix_borne">10000</string>
+
+
+    <string name="pref_radius_key" translatable="false">3000</string>
+
+    <string name="pref_radius_label_un_borne">1 km</string>
+    <string name="pref_radius_label_trois_borne">3 km</string>
+    <string name="pref_radius_label_dix_borne">10 km</string>
+
+
+
     <!-- Label for metric option in temperature unit preference [CHAR LIMIT=25] -->
     <string name="pref_units_label_metric">Metric</string>
 
