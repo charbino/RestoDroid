@@ -15,10 +15,8 @@
  */
 package com.example.marcelo.restodroid;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.*;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -47,7 +45,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-
+import android.location.LocationManager;
 
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
@@ -79,7 +77,7 @@ public class ForecastFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            updateWeather();
+            updateResto();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -117,7 +115,7 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
-    private void updateWeather() {
+    private void updateResto() {
         FetchWeatherTask weatherTask = new FetchWeatherTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = prefs.getString(getString(R.string.pref_location_key),
@@ -128,7 +126,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        updateWeather();
+        updateResto();
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
@@ -136,7 +134,7 @@ public class ForecastFragment extends Fragment {
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
 
-        private String[] getWeatherDataFromJson(String forecastJsonStr, int numResto)
+        private String[] getRestoDataFromJson(String forecastJsonStr, int numResto)
                 throws JSONException {
 
             final String OWM_LIST = "objetsTouristiques";
@@ -205,10 +203,12 @@ public class ForecastFragment extends Fragment {
                 double longitude =5.724;
                 double lattitude =45.188;
 
-//                //on récupère la longitute et lattitude actuelle
+////                //on récupère la longitute et lattitude actuelle
 //                //ATTENTION : Ne fonctionne pas
 //                LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 //                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+
 //                longitude=location.getLongitude();
 //                lattitude=location.getLatitude();
 
@@ -280,7 +280,7 @@ public class ForecastFragment extends Fragment {
                 }
 
                 try {
-                    return getWeatherDataFromJson(forecastJsonStr, nbResto);
+                    return getRestoDataFromJson(forecastJsonStr, nbResto);
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, e.getMessage(), e);
                     e.printStackTrace();
@@ -297,9 +297,10 @@ public class ForecastFragment extends Fragment {
                     for (String restoForecastStr : result) {
                         mForecastAdapter.add(restoForecastStr);
                     }
-                    // New data is back from the server.  Hooray!
+
                 }
             }
         }
+
     }
 
